@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet"></link>
+  <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+  <script src="js/login.js?t=20260212054908704"></script>
+  <title>Cerca mío</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+</head>
+<body>
+  <header>
+    <h1>Mi Sitio - Login</h1>
+  </header>
+
+  <main id="main-content" style="padding: 1rem;">
+    <div x-data="loginForm()" class="container">
+      <form @submit.prevent="login" class="login-form">
+        <div>
+          <label for="username">Nombre de usuario</label>
+          <input type="text" id="username" x-model="username" placeholder="Escriba su nombre de usuario" required>
+        </div>
+  
+        <div>
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" x-model="password" placeholder="Escriba su contraseña" required>
+        </div>
+        
+        <div x-data="fillInstances()">
+          <label for="options">Compañía:</label>
+          <select id="options" x-model="selection" @change="selectedCompany = selection">
+            <option value="" disabled>[Seleccione una opción]</option>
+            <template x-for="option in options" :key="option.key">
+              <option :value="option.key" x-text="option.name"></option>
+            </template>
+          </select>
+        <p>Seleccionó: <span x-text="selection"></span></p>
+        </div>
+  
+        <div>
+          <button type="submit">Iniciar sesión</button>
+        </div>
+      </form>
+  
+      <!-- Mostrar mensajes de error o éxito -->
+      <div x-show="errorMessage" class="error-message">
+        <p x-text="errorMessage"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Pie de página</p>
+  </footer>
+</body>
+</html>

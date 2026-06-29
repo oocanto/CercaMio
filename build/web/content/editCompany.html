@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cerca mío</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+  <!-- Core theme CSS (includes Bootstrap) -->
+  <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation-->
+  <div id="divNav"></div>
+  <!-- Header-->
+  <div id="divHeader"></div>
+  <div class="container my-4">
+    <div x-data="editionForm()" x-init="init()" class="card shadow p-4">
+      <h3 class="mb-4" x-text="form.id ? 'Editar comercio' : 'Crear comercio'"></h3>
+      <input type="hidden" x-model="form.id" />
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" x-model="form.name">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Descripción</label>
+          <input type="text" class="form-control" x-model="form.description">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Tipo</label>
+          <select class="form-select" x-model="form.idCompanyType">
+            <option disabled value="">Seleccione</option>
+            <template x-for="company_type in company_types" :key="company_type.id">
+              <option :value="company_type.id" x-text="company_type.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Estado</label>
+          <select class="form-select" x-model="form.idCompanyStatus">
+            <option disabled value="">Seleccione</option>
+            <template x-for="cs in company_status" :key="cs.id">
+              <option :value="cs.id" x-text="cs.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Dirección</label>
+          <input type="text" class="form-control" x-model="form.address">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Código Postal</label>
+          <input type="text" class="form-control" x-model="form.postalCode">
+        </div>
+
+        <div class="col-md-8">
+          <label class="form-label">Información adicional de dirección</label>
+          <input type="text" class="form-control" x-model="form.addressAdditionalInfo">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Provincia</label>
+          <select class="form-select" x-model="form.idProvince" @change="onProvinceChange">
+            <option disabled value="">Seleccione</option>
+            <template x-for="province in provinces" :key="province.id">
+              <option :value="province.id" x-text="province.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Departamento</label>
+          <select class="form-select" x-model="form.idDepartment" @change="onDepartmentChange">
+            <option disabled value="">Seleccione</option>
+            <template x-for="department in departments" :key="department.id">
+              <option :value="department.id" x-text="department.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Localidad</label>
+          <select class="form-select" x-model="form.idLocality">
+            <option disabled value="">Seleccione</option>
+            <template x-for="locality in localities" :key="locality.id">
+              <option :value="locality.id" x-text="locality.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" x-model="form.email">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Teléfono fijo</label>
+          <input type="text" class="form-control" x-model="form.telephoneNumberLandline">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Teléfono móvil</label>
+          <input type="text" class="form-control" x-model="form.telephoneNumberMobile">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Información adicional</label>
+          <input type="text" class="form-control" x-model="form.companyAdditionalInfo">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Latitud</label>
+          <input type="text" class="form-control text-end" x-model="form.latitude">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Longitud</label>
+          <input type="text" class="form-control text-end" x-model="form.longitude">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Servicio</label>
+          <select class="form-select" x-model="form.idService">
+            <option disabled value="">Seleccione</option>
+            <template x-for="service in services" :key="service.id">
+              <option :value="service.id" x-text="service.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <div class="col-12 text-end">
+          <button class="btn btn-primary" @click="submitForm()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer-->
+  <div id="divFooter"></div>
+
+  <!-- Bootstrap core JS-->
+  <script src="js/components/bootstrap/bootstrap.bundle.min.js?t=20260212054908704"></script>
+  <link rel="stylesheet" href="css/components/tom-select/tom-select.css?t=20260212054908704" />
+  <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+  <script src="js/components/tom-select/tom-select.complete.min.js?t=20260212054908704"></script>
+  <script src="js/main.js?t=20260212054908704"></script>
+  <script src="js/config.js?t=20260212054908704"></script>
+  <script src="js/editCompany.js?t=20260212054908704"></script>
+</body>
+</html>

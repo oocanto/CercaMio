@@ -1,0 +1,50 @@
+<header class="navbar navbar-expand-lg sticky-top shadow-sm" style="background-color: #004e92;">
+  <!--<header class="navbar navbar-expand-lg sticky-top shadow-sm" style="background-color: #f09325;">-->
+  <div class="container-fluid px-3 py-2">
+    <!-- Logo + Marca -->
+    <a class="navbar-brand d-flex align-items-center text-white fw-bold fs-4" href="index.html">
+      <img src="assets/img/QuijotitoLogoSinLetras.png" alt="Logo Quijotito" width="50" height="60" class="me-2 logo">
+      <span class="brand-gradient">Cerca mío</span>
+    </a>
+
+    <!-- Botón hamburguesa -->
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+      <!-- Contenido colapsable -->
+      <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
+        <div class="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
+
+        <!-- Header -->
+      <div class="d-flex flex-wrap justify-content-center gap-3 flex-grow-1" id="categorias-navbar">
+          <!-- Aquí se insertan dinámicamente las categorías principales -->
+      </div>
+
+      <!-- Dropdown para categorías extra -->
+      <div class="dropdown ms-3" id="categorias-extra-container" style="display:none;">
+        <button class="btn btn-light dropdown-toggle fw-semibold" type="button" id="dropdownCategorias" data-bs-toggle="dropdown" aria-expanded="false">
+          Más categorías
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCategorias" id="categorias-extra">
+          <!-- Aquí se insertan dinámicamente las categorías restantes -->
+        </ul>
+      </div>
+
+
+        <!-- Búsqueda -->
+        <!--<form class="d-flex flex-grow-1 justify-content-center" role="search" style="min-width: 220px; max-width: 300px;">
+          <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
+          <button class="btn btn-dark" type="submit">Buscar</button>
+        </form>-->
+
+        <!-- Íconos -->
+        <div class="d-flex align-items-center">
+          <a href="login.html" class="text-white me-3"><i class="bi bi-person-circle fs-4"></i></a>
+         <!--  <a href="#" class="text-white"><i class="bi bi-cart fs-4"></i></a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

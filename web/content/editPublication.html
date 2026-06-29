@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Cerca mío</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+        <!-- Bootstrap icons-->
+        <link href="css/components/bootstrap/bootstrap-icons.css?t=20260212054908704" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+        <link href="css/self_style.css?t=20260212054908704" rel="stylesheet" />
+        <!-- Agregar Tom-Select CSS para el modal -->
+        <link rel="stylesheet" href="css/components/tom-select/tom-select.css?t=20260212054908704" />
+        <style>
+            .error {
+                color: red;
+                font-size: 0.875rem;
+            }
+            .preview {
+                max-height: 150px;
+                margin-top: 10px;
+            }
+            .agreement-text {
+                max-height: 400px;
+                overflow-y: auto;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <div id="divNav"></div>
+        
+        <!-- Header-->
+        <div id="divHeader"></div>
+        
+        <!-- Section-->
+        <section class="py-5">
+            <div id="divForm" class="container px-4 px-lg-5 mt-5">
+                <div x-data="editionForm()" x-init="init()" class="p-4 mx-auto">
+                    <h3 class="mb-4" x-text="form.id ? 'Editar publicación' : 'Crear publicación'"></h3>
+                    <input type="hidden" x-model="form.id" />
+                    
+                    <div class="row">
+                        <!-- Columna 1 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <label class="form-label">Compañía:</label>
+                            <select x-model="form.idCompany" class="form-select">
+                                <option value="">Seleccione...</option>
+                                <template x-for="c in companies" :key="c.id">
+                                    <option :value="c.id" x-text="c.name"></option>
+                                </template>
+                            </select>
+                            <div x-show="errors.company" class="error" x-text="errors.company"></div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <label class="form-label">Categoría:</label>
+                            <select x-model="form.idCategory" @change="loadItems()" class="form-select">
+                                <option value="">Seleccione...</option>
+                                <template x-for="c in categories" :key="c.id">
+                                    <option :value="c.id" x-text="c.name"></option>
+                                </template>
+                            </select>
+                            <div x-show="errors.category" class="error" x-text="errors.category"></div>
+                        </div>
+                        
+                        <div class="col-md-12 col-lg-4 mb-3">
+                            <label class="form-label">Ítem:</label>
+                            <div class="input-group">
+                                <select x-model="form.idItem" class="form-select">
+                                    <option value="">Seleccione...</option>
+                                    <template x-for="i in items" :key="i.id">
+                                        <option :value="i.id" x-text="i.name"></option>
+                                    </template>
+                                </select>
+                                <button type="button" @click.prevent="openItemModal()" class="btn btn-outline-secondary">
+                                    ¿No existe el ítem?
+                                </button>
+                            </div>
+                            <div x-show="errors.item" class="error" x-text="errors.item"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Descripción corta:</label>
+                            <input type="text" x-model="form.descriptionShort" class="form-control" />
+                            <div x-show="errors.descriptionShort" class="error" x-text="errors.descriptionShort"></div>
+                            
+                            <div class="mt-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" x-model="form.enabled" id="enabledCheck">
+                                    <label class="form-check-label" for="enabledCheck">
+                                        Habilitar publicación
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" x-model="form.specialOffer" id="specialOfferCheck">
+                                    <label class="form-check-label" for="specialOfferCheck">
+                                        Oferta especial
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Descripción larga:</label>
+                            <textarea x-model="form.descriptionLong" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <label class="form-label">Precio:</label>
+                            <input type="text" id="outputPrice" x-model="form.outputPrice" class="form-control text-end" />
+                            <div x-show="errors.outputPrice" class="error" x-text="errors.outputPrice"></div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <label class="form-label">Fecha de inicio:</label>
+                            <input type="text" id="startDate" x-model="form.startDate" placeholder="dd/MM/yyyy HH:mm:ss" class="form-control" />
+                            <div x-show="errors.startDate" class="error" x-text="errors.startDate"></div>
+                        </div>
+                        
+                        <div class="col-md-12 col-lg-4 mb-3">
+                            <label class="form-label">Fecha de fin:</label>
+                            <input type="text" id="endDate" x-model="form.endDate" placeholder="dd/MM/yyyy HH:mm:ss" class="form-control" />
+                            <div x-show="errors.endDate" class="error" x-text="errors.endDate"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Imagen:</label>
+                            <input type="file" @change="handleImage($event)" class="form-control" />
+                            <input type="hidden" x-model="form.image" />
+                            <template x-if="imagePreview">
+                                <div class="mt-2">
+                                    <img :src="imagePreview" alt="Vista previa" class="preview img-thumbnail" />
+                                    <button type="button" class="btn btn-link text-danger text-decoration-none p-0 ms-2" @click="imagePreview = ''; form.image = '';">
+                                        Eliminar imagen
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <button @click="submitForm()" class="btn btn-primary px-4 py-2">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Modal para crear ítem -->
+                    <div x-data="itemModal()" 
+                         @open-item-modal.window="selectedCategoryId = $event.detail.categoryId; open()">
+                        <div x-show="isOpen" class="modal fade" tabindex="-1" :class="{'show d-block': isOpen, 'd-none': !isOpen}">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Crear nuevo ítem</h5>
+                                        <button type="button" class="btn-close" @click="close()" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre:</label>
+                                            <input type="text" x-model="form.name" class="form-control">
+                                            <div x-show="errors.name" class="error" x-text="errors.name"></div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Descripción:</label>
+                                            <input type="text" x-model="form.description" class="form-control">
+                                            <div x-show="errors.description" class="error" x-text="errors.description"></div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Imagen:</label>
+                                            <input type="file" @change="handleImageItemModal($event)" class="form-control">
+                                            <template x-if="imagePreviewItemModal">
+                                                <div class="mt-2">
+                                                    <img :src="imagePreviewItemModal" alt="Vista previa" class="preview img-thumbnail">
+                                                    <button type="button" class="btn btn-link text-danger text-decoration-none p-0 ms-2" @click="removeImageItemModal()">
+                                                        Eliminar imagen
+                                                    </button>
+                                                </div>
+                                            </template>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Categorías:</label>
+                                            <select x-ref="categoriesSelect" multiple class="form-select"></select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" @click="close()" class="btn btn-secondary">Cancelar</button>
+                                        <button type="button" @click="submitForm()" class="btn btn-primary">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal de acuerdo -->
+                    <div x-data="agreementModal()"
+                         @show-agreement.window="formContext = $event.detail.formContext; open()">
+                        <div x-show="isOpen" 
+                             class="modal fade" 
+                             tabindex="-1" 
+                             :class="{'show d-block': isOpen, 'd-none': !isOpen}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">TÉRMINOS Y CONDICIONES DE USO</h5>
+                                        <button type="button" class="btn-close" @click="cancel()" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="agreement-text" x-text="agreementText"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" @click="cancel()" class="btn btn-secondary">Cancelar</button>
+                                        <button type="button" @click="accept()" class="btn btn-primary">Aceptar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div x-show="isOpen" class="modal-backdrop fade show"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer-->
+        <div id="divFooter"></div>
+        
+        <!-- Bootstrap JS -->
+        <script src="js/components/bootstrap/bootstrap.bundle.min.js?t=20260212054908704"></script>
+        <!-- Core theme JS-->
+        <script src="js/components/imask/imask.js?t=20260212054908704"></script>
+        <script src="js/components/tom-select/tom-select.complete.min.js?t=20260212054908704"></script>
+        <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+        <script src="js/main.js?t=20260212054908704"></script>
+        <script src="js/config.js?t=20260212054908704"></script>
+        <script src="js/config_component.js?t=20260212054908704"></script>
+        <script src="js/editPublication.js?t=20260212054908704"></script>
+    </body>
+</html>

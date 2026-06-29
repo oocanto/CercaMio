@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cerca mío</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+  <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+</head>
+<body class="p-4" x-data="formulario()">
+
+  <form @submit.prevent="enviar">
+    <div>
+      <label>Categoría:</label>
+      <select x-model="categoria" @change="cargarItems">
+        <option value="">-- Seleccionar --</option>
+        <template x-for="(items, cat) in datos">
+          <option :value="cat" x-text="cat"></option>
+        </template>
+      </select>
+    </div>
+
+    <div>
+      <label>Ítem:</label>
+      <select x-model="item">
+        <option value="">-- Seleccionar --</option>
+        <template x-for="it in itemsDisponibles" :key="it">
+          <option x-text="it"></option>
+        </template>
+      </select>
+    </div>
+
+    <div>
+      <label>Inicio:</label>
+      <input type="datetime-local" x-model="inicio">
+    </div>
+
+    <div>
+      <label>Fin:</label>
+      <input type="datetime-local" x-model="fin">
+    </div>
+
+    <div>
+      <label>Título:</label>
+      <input type="text" x-model="titulo">
+    </div>
+
+    <div>
+      <label>Descripción:</label>
+      <textarea x-model="descripcion"></textarea>
+    </div>
+
+    <div>
+      <label><input type="checkbox" x-model="habilitado"> Habilitado</label>
+    </div>
+
+    <div>
+      <label>Imagen:</label>
+      <input type="file" @change="convertirImagen">
+      <template x-if="imagen">
+        <div>
+          <small>Imagen cargada:</small>
+          <img :src="imagen" alt="Previsualización" style="max-width: 200px; display:block;">
+        </div>
+      </template>
+    </div>
+
+    <div>
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+
+  <script>
+    function formulario() {
+      return {
+        datos: {
+          'Frutas': ['Manzana', 'Banana', 'Pera'],
+          'Verduras': ['Zanahoria', 'Lechuga', 'Tomate']
+        },
+        categoria: '',
+        item: '',
+        itemsDisponibles: [],
+        inicio: '',
+        fin: '',
+        titulo: '',
+        descripcion: '',
+        habilitado: false,
+        imagen: '',
+
+        cargarItems: function () {
+          this.itemsDisponibles = this.datos[this.categoria] || [];
+          this.item = '';
+        },
+
+        convertirImagen: function (event) {
+          var file = event.target.files[0];
+          if (file) {
+            var reader = new FileReader();
+            var self = this;
+            reader.onload = function (e) {
+              self.imagen = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        },
+
+        enviar: function () {
+          var payload = {
+            categoria: this.categoria,
+            item: this.item,
+            inicio: this.inicio,
+            fin: this.fin,
+            titulo: this.titulo,
+            descripcion: this.descripcion,
+            habilitado: this.habilitado,
+            imagen: this.imagen
+          };
+
+          fetch('/ruta/de/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+          .then(function (response) {
+            if (response.ok) {
+              alert('Formulario enviado correctamente.');
+            } else {
+              alert('Error al enviar formulario.');
+            }
+          })
+          .catch(function (error) {
+            alert('Error en la red o el servidor.');
+          });
+        }
+      };
+    }
+  </script>
+</body>
+</html>

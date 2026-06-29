@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cerca mío</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+  <link href="css/self_style.css?t=20260212054908704" rel="stylesheet" />
+  <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation-->
+  <div id="divNav"></div>
+  <!-- Header-->
+  <div id="divHeader"></div>
+  <div class="container mt-4">
+    <div x-data="editionForm()" x-init="init()" class="p-4 bg-light rounded shadow-sm">
+      <input type="hidden" x-model="form.id" />
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Monto del pago</label>
+          <input id="amountPayment" type="text" x-model="form.amountPayment" class="form-control text-end">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Servicio</label>
+          <input type="text" x-model="form.service" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Fecha de inicio</label>
+          <input type="text" id="startDate" x-model="form.startDate" placeholder="dd/MM/yyyy HH:mm:ss" class="form-control" />
+          <div x-show="errors.startDate" class="text-danger small" x-text="errors.startDate"></div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fecha de fin</label>
+          <input type="text" id="endDate" x-model="form.endDate" placeholder="dd/MM/yyyy HH:mm:ss" class="form-control" />
+          <div x-show="errors.endDate" class="text-danger small" x-text="errors.endDate"></div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Comercio</label>
+          <input type="text" x-model="form.company" class="form-control" disabled>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Comentarios</label>
+        <textarea x-model="form.comment" class="form-control"></textarea>
+      </div>
+
+      <div class="text-end">
+        <button @click="submitForm()" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+  <!-- Footer-->
+  <div id="divFooter"></div>
+
+  <!-- Bootstrap core JS-->
+  <script src="js/components/bootstrap/bootstrap.bundle.min.js?t=20260212054908704"></script>
+  <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+  <script src="js/components/imask/imask.js?t=20260212054908704"></script>
+  <script src="js/main.js?t=20260212054908704"></script>
+  <script src="js/config.js?t=20260212054908704"></script>
+  <script src="js/config_component.js?t=20260212054908704"></script>
+  <script src="js/editPayment.js?t=20260212054908704"></script>
+</body>
+</html>

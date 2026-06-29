@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Plataforma de ofertas locales" />
+  <meta name="author" content="Cerca mío" />
+  <title>Cerca mío</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+  <!-- Bootstrap icons -->
+  <link href="css/components/bootstrap/bootstrap-icons.css?t=20260212054908704" rel="stylesheet" />
+  <!--Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?t=20260212054908704">
+
+
+  <!-- Core theme CSS (includes Bootstrap) -->
+  <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+  <link href="css/self_style.css?t=20260212054908704" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="divNav"></div>
+  <!-- Header -->
+  <div id="divHeader"></div>
+
+  <!-- Section -->
+  <section class="container-fluid py-5">
+    <div class="container px-4 px-lg-5 mt-4">
+
+      <!-- Contenedor de filtros activos --> 
+      <div id="active-filters" class="d-flex flex-wrap gap-2 mb-3"></div>
+
+      <!-- Buscador -->
+      <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="input-group shadow-sm">
+            <input class="form-control border-end-0 rounded-start" 
+                   placeholder="🔍 Busque su artículo" 
+                   id="txtItemName" type="text">
+            <button class="btn btn-primary rounded-end " id="btnSearch"
+              onclick="getEntities(document.getElementById('txtItemName').value); document.getElementById('txtItemName').focus(); return false;">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de orden -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center gap-2">
+                <label for="selOrder" class="form-label fw-semibold text-secondary mb-0 text-nowrap">
+                Ordenar por
+                </label>
+                <select class="form-select shadow-sm flex-grow-1" id="selOrder" 
+                        x-data="{ order: 1 }" x-model="order" @change="updateOrder()">
+                <option value="1">Precio ascendente</option>
+                <option value="2">Precio descendente</option>
+                <option value="3">Nombre ascendente</option>
+                <option value="4">Nombre descendente</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Selector de distancia -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center gap-2">
+                <label for="selDistance" class="form-label fw-semibold text-secondary mb-0 text-nowrap">
+                Distancia al comercio
+                </label>
+                <select class="form-select shadow-sm flex-grow-1" id="selDistance" 
+                        x-data="{ distance: 1 }" x-model="distance" @change="updateDistance()">
+                <option value="0">Sin distancia</option>
+                <option value="1">500 m</option>
+                <option value="2">1 Km</option>
+                <option value="3">2 Km </option>
+                <option value="4">5 Km</option>
+                <option value="5">10 Km</option>
+                <option value="6">20 Km</option>
+                <option value="7">50 Km</option>
+                <option value="8">100 Km</option>
+                </select>
+            </div>
+        </div>
+
+
+      <div class="container my-5">
+        <!-- 🔹 Título con id para poder modificarlo desde JS -->
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
+            <h2 id="publicationsTitle" class="fw-bold m-0" style="color: #F09325;"></h2>
+            <a id="btnClearCompany" href="#" class="btn-close"></a>
+        </div>
+        
+        <!-- 🔹 Contenedor de cards -->
+        <div id="publications" class="row gx-3 gy-4 justify-content-center"></div>
+      </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="divFooter"></div>
+
+  <!-- Bootstrap core JS -->
+  <script src="js/components/bootstrap/bootstrap.bundle.min.js?t=20260212054908704"></script>
+  <!-- Alpine.js -->
+  <script src="js/components/alpine/alpine.js?t=20260212054908704"></script>
+  <!-- Core scripts -->
+  <script src="js/main.js?t=20260212054908704"></script>
+  <script src="js/config.js?t=20260212054908704"></script>
+  <script src="js/header_categories.js?t=20260212054908704"></script>
+  <script src="js/index.js?t=20260212054908704"></script>
+</body>
+</html>

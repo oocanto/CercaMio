@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Cerca mío</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico?t=20260212054908704" />
+        <!-- Bootstrap icons-->
+        <link href="css/components/bootstrap/bootstrap-icons.css?t=20260212054908704" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <div id="divNav">
+        </div>
+        <!-- Header-->
+        <div id="divHeader">
+        </div>
+        <!-- Section-->
+        <section class="py-5">
+            <div x-data="entitiesTable()" x-init="init()" class="p-4">
+                <h1>Listado de usuarios</h1>
+                <div id="entities-table" class="mt-4"></div>
+            </div>
+            <button onClick="newEntity()" class="btn btn-primary mt-4 bg-blue-600 text-white px-4 py-2 rounded">Nuevo usuario</button>
+        </section>
+        <!-- Footer-->
+        <div id="divFooter">
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="js/components/bootstrap/bootstrap.bundle.min.js?t=20260212054908704"></script>
+        <!-- Core theme JS-->
+        <link href="css/components/tabulator/tabulator_bootstrap3.min.css?t=20260212054908704" rel="stylesheet" />
+        <style>
+          .tabulator-cell img {
+            max-height: 50px;
+          }
+          .icon-btn {
+            cursor: pointer;
+            margin: 0 5px;
+            font-size: 18px;
+          }
+        </style>
+        <script src="js/components/alpine/alpine.js?t=20260212054908704" defer></script>
+        <script src="js/components/tabulator/tabulator.min.js?t=20260212054908704" defer></script>
+        <script src="js/main.js?t=20260212054908704"></script>
+        <script src="js/config.js?t=20260212054908704"></script>
+        <script src="js/listUsers.js?t=20260212054908704"></script>
+    </body>
+</html>

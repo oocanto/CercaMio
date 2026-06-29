@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="background-color: #004e92;">
+  <div class="container-fluid px-3 py-2">
+    <!-- Logo + Marca -->
+    <a class="navbar-brand d-flex align-items-center text-white fw-bold fs-4" href="index.html">
+      <img src="assets/img/QuijotitoLogoSinLetras.png" alt="Logo Quijotito" width="50" height="60" class="me-2 logo">
+      <span class="brand-gradient">Cerca mío</span>
+    </a>
+
+    <!-- Botón hamburguesa -->
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenido colapsable -->
+    <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarSupportedContent">
+      <div class="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
+
+        <!-- Menú -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 text-white fw-semibold">
+          <li class="nav-item"><a class="nav-link text-white" href="home.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="listPublications.html">Publicaciones</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="listCompanies.html">Comercios</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="listItems.html">Ítems</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="listCategories.html">Categorías</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="listUsers.html">Usuarios</a></li>
+          <!--<li class="nav-item"><a class="nav-link text-white" href="#" onclick="javascript: closeSession(); return false;">Cerrar sesión</a></li>-->
+        </ul>
+
+       <!-- Usuario -->
+        <div class="d-flex align-items-center text-white gap-4">
+            <!-- Bloque usuario -->
+            <div class="d-flex flex-column align-items-center">
+                <i class="bi bi-person-circle fs-4 mb-1"></i>
+                <span id="spaUser" class="small fw-semibold"></span>
+            </div>
+
+            <!-- Bloque cerrar sesión -->
+            <div class="d-flex flex-column align-items-center">
+                <a href="#" onclick="javascript: closeSession(); return false;" class="text-white text-decoration-none d-flex flex-column align-items-center">
+                <i class="bi bi-box-arrow-right fs-5 mb-1"></i>
+                <span class="small fw-semibold">Cerrar sesión</span>
+                </a>
+            </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</nav>
