@@ -1,12 +1,9 @@
 window.config = {
 
-    // BASE_FRONTEND_URL: 'https://localhost:8443/Quijotito/content',
-    BASE_FRONTEND_URL: 'http://localhost:8084/CercaMio/content',
-    // BASE_FRONTEND_URL: 'http://calendariopd.yjere.com.ar/cercamio/content',
-    // BASE_BACKEND_URL: 'https://127.0.0.1:9001',
-    // BASE_BACKEND_URL: 'https://localhost:8443/QuijotitoBackend/api',
-    BASE_BACKEND_URL: 'http://localhost:8084/CercaMioB/api',
-    // BASE_BACKEND_URL: 'http://calendariopd.yjere.com.ar/cercamio-b/api',
+    BASE_FRONTEND_URL: 'https://cercamio.ar/cercamio/content',
+    // BASE_FRONTEND_URL: 'http://localhost:8084/cercamio/content',
+    BASE_BACKEND_URL: 'https://cercamio.ar/cercamio-b/api',
+    // BASE_BACKEND_URL: 'http://localhost:8084/cercamio-b/api',
     BOOLEAN_VALUE_TRUE: '1',
     BOOLEAN_VALUE_FALSE: '0',
     MESSAGE_CONFIRM: '¿Confirma la operación?',

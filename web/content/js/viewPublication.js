@@ -174,10 +174,10 @@ function publicationDetail() {
       }).addTo(map);
 
       const iconUrl = this.form.specialOffer === '1'
-        ? '/Quijotito/content/assets/img/pinOferta.png'
-        : '/Quijotito/content/assets/img/pinCommerce.png';
+        ? '/cercamio/content/assets/img/pinOferta.png'
+        : '/cercamio/content/assets/img/pinCommerce.png';
 
-      const iconUserUrl = '/Quijotito/content/assets/img/pinUser.png';
+      const iconUserUrl = '/cercamio/content/assets/img/pinUser.png';
 
       const customIcon = L.divIcon({
         html: `<div class="pin-bounce"><img src="${iconUrl}" style="width:32px;height:32px;"></div>`,

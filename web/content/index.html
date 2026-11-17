@@ -112,13 +112,18 @@
             <!-- ============================================ -->
             <!-- Contenedor de publicaciones -->
             <!-- ============================================ -->
+            
             <div class="container my-5">
                 <!-- Título de publicaciones con botón de limpiar empresa -->
                 <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
                     <h2 id="publicationsTitle" class="fw-bold m-0" style="color: #F09325;"></h2>
                     <a id="btnClearCompany" href="#" class="btn-close" style="display: none;"></a>
                 </div>
-                
+
+                <div id="loadingBox" class="loading-box" style="display: none;">
+                    <div class="spinner"></div>
+                    <span>Cargando...</span>
+                </div>             
                 <!-- Contenedor de cards de publicaciones -->
                 <div id="publications" class="row gx-3 gy-4 justify-content-center"></div>
             </div>

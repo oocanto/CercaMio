@@ -6,15 +6,28 @@ window.onload = function() {
 
 function entitiesTable() {
     return {
-        
+
+        loading: false,
+
         form: {
             itemName: null
         },
-        
+
         table: null,
 
         async init() {
-            const data = await this.fetchEntities();
+            var data = [];
+
+            this.loading = true;
+            try {
+                data = await this.fetchEntities();
+            } catch (err) {
+                console.error(err);
+                alert(config.MESSAGE_OPERATION_ERROR);
+            } finally {
+                this.loading = false;
+            }
+
             this.table = new Tabulator("#entities-table", {
                 data: data,
                 responsiveLayout: "collapse",
@@ -72,10 +85,11 @@ function entitiesTable() {
                         hozAlign: "right",
                         formatter: function(cell) {
                             var value = cell.getValue();
-                            
+
                             return config.format_currency_view(value);
                         }
-                    },                    {
+                    },
+                    {
                         title: "Inicio",
                         headerFilter: "input",
                         headerHozAlign: "center",
@@ -84,13 +98,13 @@ function entitiesTable() {
                         formatter: function(cell) {
                             var value = cell.getValue();
                             if (!value) return "";
-                            
+
                             var date = new Date(value);
                             var day = ("0" + date.getDate()).slice(-2);
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
                             var year = date.getFullYear();
-                        
-                            return `${day}/${month}/${year}`;
+
+                            return day + "/" + month + "/" + year;
                         }
                     },
                     {
@@ -102,13 +116,13 @@ function entitiesTable() {
                         formatter: function(cell) {
                             var value = cell.getValue();
                             if (!value) return "";
-                            
+
                             var date = new Date(value);
                             var day = ("0" + date.getDate()).slice(-2);
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
                             var year = date.getFullYear();
-                        
-                            return `${day}/${month}/${year}`;
+
+                            return day + "/" + month + "/" + year;
                         }
                     },
                     {
@@ -122,8 +136,7 @@ function entitiesTable() {
                                 return '<img src="' + val + '" alt="img" />';
                             }
                             return '';
-                        },
-                        hozAlign: "center"
+                        }
                     },
                     {
                         title: "Acciones",
@@ -154,6 +167,11 @@ function entitiesTable() {
                     'Authorization': 'Bearer ' + sessionStorage.getItem('auth_data')
                 }
             });
+
+            if (!res.ok) {
+                throw new Error("Error al obtener las publicaciones");
+            }
+
             return await res.json();
         }
     };

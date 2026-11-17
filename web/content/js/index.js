@@ -9,6 +9,7 @@ var currentLongitude = 0.0;     // Longitud del usuario
 var currentCategories = '';     // IDs de categorías seleccionadas (separadas por coma)
 var currentCompany = 0;         // ID de empresa seleccionada
 var currentCompanyName = '';    // Nombre de empresa seleccionada
+var pendingRequests = 0;        // Cantidad de búsquedas en curso (para la ruedita de espera)
 
 // ============================================================================
 // INICIALIZACIÓN
@@ -197,6 +198,44 @@ function executeCategoriesAction(ids) {
 }
 
 // ============================================================================
+// RUEDITA DE ESPERA
+// ============================================================================
+
+/**
+ * Muestra la ruedita de espera y limpia las tarjetas anteriores
+ */
+function showLoading() {
+    pendingRequests++;
+
+    var loadingBox = document.getElementById('loadingBox');
+    var container = document.getElementById('publications');
+
+    if (container) {
+        container.innerHTML = '';
+    }
+    if (loadingBox) {
+        loadingBox.style.display = 'flex';
+    }
+}
+
+/**
+ * Oculta la ruedita de espera cuando terminaron todas las búsquedas en curso
+ */
+function hideLoading() {
+    pendingRequests--;
+    if (pendingRequests < 0) {
+        pendingRequests = 0;
+    }
+
+    if (pendingRequests === 0) {
+        var loadingBox = document.getElementById('loadingBox');
+        if (loadingBox) {
+            loadingBox.style.display = 'none';
+        }
+    }
+}
+
+// ============================================================================
 // BÚSQUEDA Y OBTENCIÓN DE DATOS
 // ============================================================================
 
@@ -205,15 +244,16 @@ function executeCategoriesAction(ids) {
  * @param {string} itemNameFromParam - Nombre del artículo a buscar
  */
 async function getEntities(itemNameFromParam) {
-    try {
-        var itemName = itemNameFromParam || document.getElementById('txtItemName').value.trim();
+    var itemName = itemNameFromParam || document.getElementById('txtItemName').value.trim();
 
-        // Si no hay texto y no hay empresa seleccionada, no buscar
-        if (!itemName && currentCompany == 0) {
-            console.log('No se ingresó ningún nombre de ítem; no se buscará nada.');
-            return;
-        }
-        
+    // Si no hay texto y no hay empresa seleccionada, no buscar
+    if (!itemName && currentCompany == 0) {
+        console.log('No se ingresó ningún nombre de ítem; no se buscará nada.');
+        return;
+    }
+
+    showLoading();
+    try {
         // Obtener ubicación del usuario
         var position = await getCurrentLocation();
         console.log('Ubicación obtenida:', position.coords.latitude, position.coords.longitude);
@@ -247,6 +287,8 @@ async function getEntities(itemNameFromParam) {
         return data;
     } catch (error) {
         console.error('Error in /public/publications: ', error);
+    } finally {
+        hideLoading();
     }
 }
 
@@ -339,7 +381,7 @@ async function fillCards(data) {
         // Crear esquina de oferta si aplica
         var esquiner = pub.specialOffer === '1' ? 
             '<div class="esquiner-img">' +
-                '<img src="/Quijotito/content/assets/img/QuijotitoOferta.png" ' +
+                '<img src="/cercamio/content/assets/img/QuijotitoOferta.png" ' +
                 'alt="Oferta especial" class="esquiner-icon">' +
             '</div>' : '';
 

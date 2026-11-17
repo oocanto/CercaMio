@@ -12,6 +12,8 @@
         <link href="css/components/bootstrap/bootstrap-icons.css?t=20260212054908704" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/components/bootstrap/styles.css?t=20260212054908704" rel="stylesheet" />
+        <!-- Estilos personalizados -->
+        <link href="css/self_style.css?t=20260212054908704" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -24,6 +26,11 @@
         <section class="py-5">
             <div x-data="entitiesTable()" x-init="init()" class="p-4">
                 <h1>Listado de publicaciones</h1>
+                
+                <div x-show="loading" class="loading-box">
+                    <div class="spinner"></div>
+                    <span>Cargando...</span>
+                </div>
                 <div id="entities-table" class="mt-4"></div>
             </div>
             <button onClick="newEntity()" class="btn btn-primary mt-4 bg-blue-600 text-white px-4 py-2 rounded">Nueva publicación</button>
